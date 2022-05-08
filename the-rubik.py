@@ -36,8 +36,8 @@ def main():
         rubik.display()
         
         pygame.display.flip()
-        pygame.time.wait(2)
-        glRotate(1, 1, 0, 0)
+        pygame.time.wait(10)
+        glRotate(2, 2, 2, 0)
 
 
 
