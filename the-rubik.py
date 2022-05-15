@@ -12,8 +12,10 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+from Plan import *
 from Cube import *
 from Rubik import *
+from Transformation import *
 
 def main():
     pygame.init()
@@ -24,21 +26,29 @@ def main():
     glTranslatef(0.0, 0.0, -40.0)
     glRotate(0, 0, 0, 0)
 
+    glEnable(GL_BLEND)
+    glDisable(GL_DEPTH_TEST)
+
     rubik = Rubik()
+    plan = Plan()
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        rubik.display()
-        
+        reload_display([rubik, plan])
         pygame.display.flip()
+
+        rubik.q_transformation(Transformation(TRANSFORMATION_ROTATION, 1, 1, 2, 0))
         pygame.time.wait(10)
-        glRotate(2, 2, 2, 0)
+        
 
-
+ 
+def reload_display(objs):
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    for obj in objs:
+        obj.display()
 
 main()
